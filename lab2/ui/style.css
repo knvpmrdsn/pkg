@@ -1,0 +1,594 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f2f5f9;
+    color: #192b3d;
+    font: 15px system-ui, sans-serif;
+}
+
+main {
+    max-width: 1400px;
+    margin: auto;
+    padding: 24px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0 28px;
+    color: #64748b;
+}
+
+.brand {
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #126b78;
+}
+
+section,
+article {
+    background: white;
+    border: 1px solid #dce4ec;
+    border-radius: 14px;
+    padding: 24px;
+}
+
+small {
+    color: #087f8c;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 36px;
+    margin: 12px 0;
+}
+
+p {
+    color: #64748b;
+}
+
+.actions,
+.toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+button,
+label,
+input,
+select {
+    font: inherit;
+    border: 1px solid #cdd8e3;
+    border-radius: 8px;
+    padding: 10px 14px;
+    background: white;
+    color: inherit;
+}
+
+button,
+label {
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.primary {
+    background: #087f8c;
+    color: white;
+    border-color: #087f8c;
+}
+
+#drop {
+    border: 2px dashed #d2dee8;
+    border-radius: 10px;
+    padding: 22px;
+    text-align: center;
+    margin-top: 18px;
+    color: #64748b;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+article {
+    color: #64748b;
+}
+
+strong {
+    display: block;
+    font-size: 28px;
+    color: #192b3d;
+    margin-top: 8px;
+}
+
+.toolbar h2 {
+    margin: 0 auto 0 0;
+    font-size: 20px;
+}
+
+progress {
+    width: 100%;
+    height: 9px;
+    margin-top: 20px;
+    accent-color: #087f8c;
+}
+
+.scroll {
+    overflow: auto;
+    min-height: 140px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    text-align: left;
+}
+
+th {
+    background: #edf3f7;
+    color: #516477;
+    white-space: nowrap;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5ebf0;
+}
+
+td:first-child {
+    color: #087f8c;
+    cursor: pointer;
+    max-width: 340px;
+    overflow-wrap: anywhere;
+}
+
+tr:hover {
+    background: #f6fafb;
+}
+
+.bad {
+    color: #b42318;
+}
+
+.ok {
+    color: #087f70;
+}
+
+footer {
+    text-align: center;
+    color: #64748b;
+    padding: 24px;
+}
+
+dialog {
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    max-width: 85vw;
+    width: 650px;
+}
+
+dialog img {
+    max-width: 100%;
+    max-height: 55vh;
+    display: block;
+    margin: auto;
+}
+
+dialog::backdrop {
+    background: #13263888;
+}
+
+@media (max-width: 650px) {
+    main {
+        padding: 12px;
+    }
+
+    header {
+        display: block;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    section {
+        padding: 16px;
+    }
+}
+
+
+/* Тёмная тема */
+
+:root {
+    color-scheme: dark;
+}
+
+body {
+    background: #0c1018;
+    color: #e7edf7;
+}
+
+main {
+    padding-top: 28px;
+}
+
+section,
+article,
+dialog {
+    background: #151d2a;
+    border-color: #293548;
+    color: #e7edf7;
+}
+
+p,
+article,
+#drop {
+    color: #a4b1c5;
+}
+
+strong {
+    color: #f1f5ff;
+}
+
+small {
+    color: #63d5c7;
+}
+
+button,
+label,
+input,
+select {
+    background: #202b3b;
+    border-color: #39475b;
+    color: #e7edf7;
+}
+
+.primary {
+    background: #087f8c;
+    border-color: #1599a5;
+}
+
+#drop {
+    border-color: #40546a;
+    background: #101723;
+}
+
+#drop.drag {
+    border-color: #63d5c7;
+    background: #163239;
+}
+
+th {
+    background: #202b3b;
+    color: #b6c5d8;
+}
+
+th,
+td {
+    border-color: #293548;
+}
+
+td:first-child {
+    color: #74d9d0;
+}
+
+tr:hover {
+    background: #202b3b;
+}
+
+tr {
+    cursor: pointer;
+}
+
+.ok {
+    color: #69dba5;
+}
+
+.bad {
+    color: #ff8d91;
+}
+
+
+/* Окно информации о файле */
+
+dialog::backdrop {
+    background: #000b;
+}
+
+dialog {
+    max-height: 90vh;
+    overflow: auto;
+}
+
+dl {
+    display: grid;
+    grid-template-columns: minmax(110px, 1fr) 2fr;
+    gap: 0;
+    margin: 18px 0;
+}
+
+dt,
+dd {
+    padding: 9px 0;
+    border-bottom: 1px solid #293548;
+    overflow-wrap: anywhere;
+}
+
+dt {
+    color: #a4b1c5;
+}
+
+dd {
+    margin: 0;
+}
+
+dialog img:not([src]) {
+    display: none;
+}
+
+
+/* Информационные блоки */
+
+.stats {
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr))
+        minmax(230px, 1.7fr);
+}
+
+#volume {
+    font-size: clamp(14px, 1.6vw, 23px);
+    overflow-wrap: anywhere;
+}
+
+
+/* Кнопка остановки */
+
+#stop:not(:disabled) {
+    background: #b92e38;
+    border-color: #e45a63;
+    color: white;
+}
+
+#stop:disabled {
+    background: #28303c;
+    color: #9aa4b3;
+}
+
+
+/* Прогресс-бар */
+
+progress {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #293548;
+    pointer-events: none;
+}
+
+progress::-webkit-progress-bar {
+    background: #293548;
+}
+
+progress::-webkit-progress-value {
+    background: #1599a5;
+}
+
+progress::-moz-progress-bar {
+    background: #1599a5;
+}
+
+
+/* Прокрутка таблицы */
+
+.scroll {
+    height: clamp(200px, calc(100dvh - 510px), 620px);
+    overflow-y: scroll;
+    scrollbar-color: #66758b #202b3b;
+    scrollbar-width: auto;
+    overscroll-behavior: contain;
+}
+
+
+/* Заголовки столбцов и сортировка */
+
+thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    user-select: none;
+}
+
+thead th:hover {
+    background: #293548;
+}
+
+thead th:focus-visible {
+    outline: 2px solid #63d5c7;
+    outline-offset: -2px;
+}
+
+
+/* Навигация по страницам */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+#pageButtons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#pageButtons button {
+    min-width: 34px;
+    padding: 7px 10px;
+}
+
+#pageButtons button.active {
+    background: #087f8c;
+    border-color: #1599a5;
+    color: white;
+}
+
+#page {
+    color: #a4b1c5;
+    font-size: 13px;
+}
+
+.ellipsis {
+    padding: 0 4px;
+}
+
+.results {
+    padding-bottom: 16px;
+}
+
+
+/* Адаптация под небольшие экраны */
+
+@media (max-width: 950px) {
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stats article:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .scroll {
+        height: 360px;
+    }
+}
+
+@media (max-height: 740px) and (min-width: 951px) {
+    main {
+        padding-top: 12px;
+    }
+
+    section,
+    article {
+        padding: 14px;
+    }
+
+    h1 {
+        font-size: 27px;
+        margin: 6px 0 12px;
+    }
+
+    #drop {
+        padding: 12px;
+        margin-top: 10px;
+    }
+
+    .stats {
+        margin: 10px 0;
+    }
+
+    progress {
+        margin-top: 12px;
+    }
+
+    .scroll {
+        height: clamp(180px, calc(100dvh - 410px), 500px);
+    }
+}
+
+
+/* Кнопки управления и иконки */
+
+.actions label,
+.actions button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.actions svg {
+    flex: none;
+}
+
+#stop.paused:not(:disabled) {
+    background: #187c57;
+    border-color: #38a878;
+    color: white;
+}
+
+
+/* Отображение процента выполнения */
+
+.progress-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.progress-line progress {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.progress-line #percent {
+    min-width: 48px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: #c8d5e7;
+    font-weight: 600;
+}
+
+@media (max-height: 740px) {
+    .progress-line {
+        margin-top: 12px;
+    }
+}
+
+
+/* Предпросмотр изображения */
+
+dialog #preview {
+    max-height: 42vh;
+    object-fit: contain;
+    margin: 12px auto;
+}
+
+dialog #preview[hidden],
+#previewMessage[hidden] {
+    display: none;
+}
+
+#previewMessage {
+    font-size: 13px;
+    text-align: center;
+}

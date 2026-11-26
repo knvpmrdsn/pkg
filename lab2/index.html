@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Анализ изображений</title>
+
+    <style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f2f5f9;
+    color: #192b3d;
+    font: 15px system-ui, sans-serif;
+}
+
+main {
+    max-width: 1400px;
+    margin: auto;
+    padding: 24px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0 28px;
+    color: #64748b;
+}
+
+.brand {
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #126b78;
+}
+
+section,
+article {
+    background: white;
+    border: 1px solid #dce4ec;
+    border-radius: 14px;
+    padding: 24px;
+}
+
+small {
+    color: #087f8c;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 36px;
+    margin: 12px 0;
+}
+
+p {
+    color: #64748b;
+}
+
+.actions,
+.toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+button,
+label,
+input,
+select {
+    font: inherit;
+    border: 1px solid #cdd8e3;
+    border-radius: 8px;
+    padding: 10px 14px;
+    background: white;
+    color: inherit;
+}
+
+button,
+label {
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.primary {
+    background: #087f8c;
+    color: white;
+    border-color: #087f8c;
+}
+
+#drop {
+    border: 2px dashed #d2dee8;
+    border-radius: 10px;
+    padding: 22px;
+    text-align: center;
+    margin-top: 18px;
+    color: #64748b;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+article {
+    color: #64748b;
+}
+
+strong {
+    display: block;
+    font-size: 28px;
+    color: #192b3d;
+    margin-top: 8px;
+}
+
+.toolbar h2 {
+    margin: 0 auto 0 0;
+    font-size: 20px;
+}
+
+progress {
+    width: 100%;
+    height: 9px;
+    margin-top: 20px;
+    accent-color: #087f8c;
+}
+
+.scroll {
+    overflow: auto;
+    min-height: 140px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    text-align: left;
+}
+
+th {
+    background: #edf3f7;
+    color: #516477;
+    white-space: nowrap;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5ebf0;
+}
+
+td:first-child {
+    color: #087f8c;
+    cursor: pointer;
+    max-width: 340px;
+    overflow-wrap: anywhere;
+}
+
+tr:hover {
+    background: #f6fafb;
+}
+
+.bad {
+    color: #b42318;
+}
+
+.ok {
+    color: #087f70;
+}
+
+footer {
+    text-align: center;
+    color: #64748b;
+    padding: 24px;
+}
+
+dialog {
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    max-width: 85vw;
+    width: 650px;
+}
+
+dialog img {
+    max-width: 100%;
+    max-height: 55vh;
+    display: block;
+    margin: auto;
+}
+
+dialog::backdrop {
+    background: #13263888;
+}
+
+@media (max-width: 650px) {
+    main {
+        padding: 12px;
+    }
+
+    header {
+        display: block;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    section {
+        padding: 16px;
+    }
+}
+
+
+/* Тёмная тема */
+
+:root {
+    color-scheme: dark;
+}
+
+body {
+    background: #0c1018;
+    color: #e7edf7;
+}
+
+main {
+    padding-top: 28px;
+}
+
+section,
+article,
+dialog {
+    background: #151d2a;
+    border-color: #293548;
+    color: #e7edf7;
+}
+
+p,
+article,
+#drop {
+    color: #a4b1c5;
+}
+
+strong {
+    color: #f1f5ff;
+}
+
+small {
+    color: #63d5c7;
+}
+
+button,
+label,
+input,
+select {
+    background: #202b3b;
+    border-color: #39475b;
+    color: #e7edf7;
+}
+
+.primary {
+    background: #087f8c;
+    border-color: #1599a5;
+}
+
+#drop {
+    border-color: #40546a;
+    background: #101723;
+}
+
+#drop.drag {
+    border-color: #63d5c7;
+    background: #163239;
+}
+
+th {
+    background: #202b3b;
+    color: #b6c5d8;
+}
+
+th,
+td {
+    border-color: #293548;
+}
+
+td:first-child {
+    color: #74d9d0;
+}
+
+tr:hover {
+    background: #202b3b;
+}
+
+tr {
+    cursor: pointer;
+}
+
+.ok {
+    color: #69dba5;
+}
+
+.bad {
+    color: #ff8d91;
+}
+
+
+/* Окно информации о файле */
+
+dialog::backdrop {
+    background: #000b;
+}
+
+dialog {
+    max-height: 90vh;
+    overflow: auto;
+}
+
+dl {
+    display: grid;
+    grid-template-columns: minmax(110px, 1fr) 2fr;
+    gap: 0;
+    margin: 18px 0;
+}
+
+dt,
+dd {
+    padding: 9px 0;
+    border-bottom: 1px solid #293548;
+    overflow-wrap: anywhere;
+}
+
+dt {
+    color: #a4b1c5;
+}
+
+dd {
+    margin: 0;
+}
+
+dialog img:not([src]) {
+    display: none;
+}
+
+
+/* Информационные блоки */
+
+.stats {
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr))
+        minmax(230px, 1.7fr);
+}
+
+#volume {
+    font-size: clamp(14px, 1.6vw, 23px);
+    overflow-wrap: anywhere;
+}
+
+
+/* Кнопка остановки */
+
+#stop:not(:disabled) {
+    background: #b92e38;
+    border-color: #e45a63;
+    color: white;
+}
+
+#stop:disabled {
+    background: #28303c;
+    color: #9aa4b3;
+}
+
+
+/* Прогресс-бар */
+
+progress {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #293548;
+    pointer-events: none;
+}
+
+progress::-webkit-progress-bar {
+    background: #293548;
+}
+
+progress::-webkit-progress-value {
+    background: #1599a5;
+}
+
+progress::-moz-progress-bar {
+    background: #1599a5;
+}
+
+
+/* Прокрутка таблицы */
+
+.scroll {
+    height: clamp(200px, calc(100dvh - 510px), 620px);
+    overflow-y: scroll;
+    scrollbar-color: #66758b #202b3b;
+    scrollbar-width: auto;
+    overscroll-behavior: contain;
+}
+
+
+/* Заголовки столбцов и сортировка */
+
+thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    user-select: none;
+}
+
+thead th:hover {
+    background: #293548;
+}
+
+thead th:focus-visible {
+    outline: 2px solid #63d5c7;
+    outline-offset: -2px;
+}
+
+
+/* Навигация по страницам */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+#pageButtons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#pageButtons button {
+    min-width: 34px;
+    padding: 7px 10px;
+}
+
+#pageButtons button.active {
+    background: #087f8c;
+    border-color: #1599a5;
+    color: white;
+}
+
+#page {
+    color: #a4b1c5;
+    font-size: 13px;
+}
+
+.ellipsis {
+    padding: 0 4px;
+}
+
+.results {
+    padding-bottom: 16px;
+}
+
+
+/* Адаптация под небольшие экраны */
+
+@media (max-width: 950px) {
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stats article:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .scroll {
+        height: 360px;
+    }
+}
+
+@media (max-height: 740px) and (min-width: 951px) {
+    main {
+        padding-top: 12px;
+    }
+
+    section,
+    article {
+        padding: 14px;
+    }
+
+    h1 {
+        font-size: 27px;
+        margin: 6px 0 12px;
+    }
+
+    #drop {
+        padding: 12px;
+        margin-top: 10px;
+    }
+
+    .stats {
+        margin: 10px 0;
+    }
+
+    progress {
+        margin-top: 12px;
+    }
+
+    .scroll {
+        height: clamp(180px, calc(100dvh - 410px), 500px);
+    }
+}
+
+
+/* Кнопки управления и иконки */
+
+.actions label,
+.actions button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.actions svg {
+    flex: none;
+}
+
+#stop.paused:not(:disabled) {
+    background: #187c57;
+    border-color: #38a878;
+    color: white;
+}
+
+
+/* Отображение процента выполнения */
+
+.progress-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.progress-line progress {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.progress-line #percent {
+    min-width: 48px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: #c8d5e7;
+    font-weight: 600;
+}
+
+@media (max-height: 740px) {
+    .progress-line {
+        margin-top: 12px;
+    }
+}
+
+
+/* Предпросмотр изображения */
+
+dialog #preview {
+    max-height: 42vh;
+    object-fit: contain;
+    margin: 12px auto;
+}
+
+dialog #preview[hidden],
+#previewMessage[hidden] {
+    display: none;
+}
+
+#previewMessage {
+    font-size: 13px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+    <main>
+        <section>
+            <small>ИНСТРУМЕНТ АНАЛИЗА</small>
+            <h1>Анализ изображений</h1>
+
+            <div class="actions">
+                <label>
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v2M3 7v12a2 2 0 0 0 2 2h13a2 2 0 0 0 2-1.5L23 9H7L3 19"/>
+                    </svg>
+
+                    Выбрать папку
+
+                    <input
+                        id="folder"
+                        type="file"
+                        webkitdirectory
+                        multiple
+                        hidden
+                    >
+                </label>
+
+                <label>
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <rect x="7" y="6" width="13" height="15" rx="2"/>
+                        <path d="M16 3H5a2 2 0 0 0-2 2v12"/>
+                    </svg>
+
+                    Выбрать файлы
+
+                    <input
+                        id="files"
+                        type="file"
+                        multiple
+                        hidden
+                    >
+                </label>
+
+                <button id="stop" disabled>
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M9 5H6v14h3zM18 5h-3v14h3z"/>
+                    </svg>
+
+                    <span>Остановить</span>
+                </button>
+            </div>
+
+            <div id="drop">
+                Перетащите файлы или папки сюда
+            </div>
+        </section>
+
+        <div class="stats">
+            <article>
+                Файлов
+                <strong id="total">0</strong>
+            </article>
+
+            <article>
+                Обработано
+                <strong id="done">0</strong>
+            </article>
+
+            <article>
+                Ошибок
+                <strong id="errors">0</strong>
+            </article>
+
+            <article>
+                Время
+                <strong id="time">—</strong>
+            </article>
+
+            <article>
+                Общий размер
+                <strong id="volume">0 Б (0 МБ)</strong>
+            </article>
+        </div>
+
+        <section class="results">
+            <div class="toolbar">
+                <h2>Результаты</h2>
+
+                <input
+                    id="search"
+                    placeholder="Поиск по имени"
+                >
+
+                <select id="filter">
+                    <option value="">Все форматы</option>
+                    <option>JPEG</option>
+                    <option>GIF</option>
+                    <option>TIFF</option>
+                    <option>BMP</option>
+                    <option>PNG</option>
+                    <option>PCX</option>
+                    <option value="other">Другое</option>
+                </select>
+
+                <select id="statusFilter">
+                    <option value="">Все статусы</option>
+                    <option value="ok">ОК</option>
+                    <option value="bad">Повреждено</option>
+                </select>
+            </div>
+
+            <div class="progress-line">
+                <progress
+                    id="progress"
+                    value="0"
+                    max="1"
+                    aria-label="Прогресс анализа"
+                ></progress>
+
+                <span id="percent">0%</span>
+            </div>
+
+            <p id="status">
+                Выберите файлы для начала анализа.
+            </p>
+
+            <div class="scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Имя файла</th>
+                            <th>Формат</th>
+                            <th>Размер, px</th>
+                            <th>DPI X × Y</th>
+                            <th>Бит/пиксель</th>
+                            <th>Сжатие</th>
+                            <th>Статус</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="rows"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <div id="pageButtons"></div>
+            </div>
+        </section>
+    </main>
+
+    <dialog id="detail">
+        <button id="close">Закрыть ×</button>
+
+        <h2 id="filename"></h2>
+
+        <img
+            id="preview"
+            alt="Изображение файла"
+            hidden
+        >
+
+        <p id="previewMessage" hidden></p>
+
+        <dl id="info"></dl>
+    </dialog>
+
+    <script>
+const workerURL = URL.createObjectURL(
+    new Blob(["async function parse(file)\n{\n    const size = file.size;\n    let bytesRead = 0;\n\n    async function read(p, n)\n    {\n        if (p < 0 || n < 0 || p + n > size)\n        {\n            throw Error('Недостаточно данных');\n        }\n\n        bytesRead += n;\n\n        return new DataView(\n            await file.slice(p, p + n).arrayBuffer()\n        );\n    }\n\n    const h = await read(0, Math.min(size, 128));\n\n    const u = p => h.getUint8(p);\n    const l = p => h.getUint16(p, true);\n    const L = p => h.getUint32(p, true);\n    const b = p => h.getUint16(p);\n    const B = p => h.getUint32(p);\n\n    const str = (d, p, n) =>\n        String.fromCharCode(\n            ...Array.from({ length: n }, (_, i) => d.getUint8(p + i))\n        );\n\n    let r = {\n        format: '',\n        width: 0,\n        height: 0,\n        depth: 0,\n        dpiX: null,\n        dpiY: null,\n        compression: '',\n        extra: ''\n    };\n\n    const dpi = (x, y) =>\n    {\n        r.dpiX = x || null;\n        r.dpiY = y || null;\n    };\n\n    const assert = (x, m = 'Некорректный заголовок') =>\n    {\n        if (!x)\n        {\n            throw Error(m);\n        }\n    };\n\n    async function tiff(base, limit)\n    {\n        const a = await read(base, 8);\n        const le = a.getUint16(0) === 0x4949;\n\n        assert(le || a.getUint16(0) === 0x4d4d);\n\n        assert(\n            a.getUint16(2, le) === 42,\n            'Поддерживается классический TIFF'\n        );\n\n        const off = a.getUint32(4, le);\n\n        const count = (await read(base + off, 2))\n            .getUint16(0, le);\n\n        assert(off + 2 + count * 12 + 4 <= limit);\n\n        const d = await read(base + off + 2, count * 12 + 4);\n        const tags = {};\n\n        for (let i = 0; i < count; i++)\n        {\n            let p = i * 12;\n            let t = d.getUint16(p, le);\n            let type = d.getUint16(p + 2, le);\n            let n = d.getUint32(p + 4, le);\n\n            let s = ({\n                1: 1,\n                3: 2,\n                4: 4,\n                5: 8\n            })[type];\n\n            if (\n                !s ||\n                !n ||\n                ![\n                    256, 257, 258, 259,\n                    273, 277, 279, 282,\n                    283, 296, 324, 325\n                ].includes(t)\n            )\n            {\n                continue;\n            }\n\n            let len = n * s;\n\n            assert(len <= limit);\n\n            let v;\n            let o = 0;\n\n            if (len <= 4)\n            {\n                v = d;\n                o = p + 8;\n            }\n            else\n            {\n                let q = d.getUint32(p + 8, le);\n\n                assert(q + len <= limit);\n\n                v = await read(base + q, len);\n            }\n\n            tags[t] = Array.from({ length: n }, (_, j) =>\n            {\n                let k = o + j * s;\n\n                return type === 1\n                    ? v.getUint8(k)\n                    : type === 3\n                        ? v.getUint16(k, le)\n                        : type === 4\n                            ? v.getUint32(k, le)\n                            : v.getUint32(k, le) /\n                              v.getUint32(k + 4, le);\n            });\n        }\n\n        return tags;\n    }\n\n    // BMP\n\n    if (size >= 26 && str(h, 0, 2) === 'BM')\n    {\n        r.format = 'BMP';\n\n        let dib = L(14);\n\n        assert(L(2) <= size && L(10) <= size);\n\n        if (dib === 12)\n        {\n            r.width = l(18);\n            r.height = l(20);\n            r.depth = l(24);\n            r.compression = 'BI_RGB';\n        }\n        else\n        {\n            assert(dib >= 40 && size >= 14 + dib);\n\n            r.width = h.getInt32(18, true);\n            r.height = Math.abs(h.getInt32(22, true));\n            r.depth = l(28);\n\n            let c = L(30);\n\n            r.compression = ({\n                0: 'BI_RGB',\n                1: 'BI_RLE8',\n                2: 'BI_RLE4',\n                3: 'BI_BITFIELDS',\n                4: 'BI_JPEG',\n                5: 'BI_PNG',\n                6: 'BI_ALPHABITFIELDS'\n            })[c] || `Код ${c}`;\n\n            dpi(\n                L(38) * 0.0254,\n                L(42) * 0.0254\n            );\n\n            if (c === 0 || c === 3)\n            {\n                assert(\n                    L(10) +\n                    Math.ceil(r.width * r.depth / 32) *\n                    4 * r.height <= size,\n                    'Обрезанные пиксели'\n                );\n            }\n            else if (L(34))\n            {\n                assert(L(10) + L(34) <= size);\n            }\n\n            r.extra = `Цветов палитры: ${\n                L(46) || (r.depth <= 8 ? 2 ** r.depth : 0)\n            }`;\n        }\n    }\n\n    // PNG\n\n    else if (\n        size >= 33 &&\n        B(0) === 0x89504e47 &&\n        B(4) === 0x0d0a1a0a\n    )\n    {\n        r.format = 'PNG';\n\n        assert(\n            B(8) === 13 &&\n            str(h, 12, 4) === 'IHDR'\n        );\n\n        r.width = B(16);\n        r.height = B(20);\n\n        let channels = ({\n            0: 1,\n            2: 3,\n            3: 1,\n            4: 2,\n            6: 4\n        })[u(25)];\n\n        assert(channels);\n\n        r.depth = u(24) * channels;\n        r.compression = 'Deflate';\n\n        r.extra = `Фильтр: ${u(27)}; тип цвета: ${u(25)}`;\n\n        let p = 8;\n        let end = false;\n\n        while (p + 12 <= size)\n        {\n            let d = await read(p, 8);\n            let n = d.getUint32(0);\n            let t = str(d, 4, 4);\n\n            assert(p + 12 + n <= size);\n\n            if (t === 'pHYs' && n === 9)\n            {\n                let z = await read(p + 8, 9);\n\n                if (z.getUint8(8) === 1)\n                {\n                    dpi(\n                        z.getUint32(0) * 0.0254,\n                        z.getUint32(4) * 0.0254\n                    );\n                }\n            }\n\n            if (t === 'IEND')\n            {\n                assert(n === 0);\n\n                end = true;\n                break;\n            }\n\n            p += 12 + n;\n        }\n\n        assert(end, 'Нет IEND');\n    }\n\n    // GIF\n\n    else if (\n        size >= 13 &&\n        ['GIF87a', 'GIF89a'].includes(str(h, 0, 6))\n    )\n    {\n        r.format = 'GIF';\n\n        r.width = l(6);\n        r.height = l(8);\n        r.depth = (u(10) & 7) + 1;\n\n        r.compression = 'LZW';\n\n        r.extra = `Глобальная палитра: ${\n            u(10) & 128 ? 2 ** r.depth : 0\n        }`;\n\n        assert(\n            (await read(size - 1, 1)).getUint8(0) === 59,\n            'Нет трейлера GIF'\n        );\n    }\n\n    // JPEG\n\n    else if (size >= 4 && b(0) === 0xffd8)\n    {\n        r.format = 'JPEG';\n        r.compression = 'JPEG / DCT';\n\n        assert(\n            (await read(size - 2, 2)).getUint16(0) === 0xffd9,\n            'Нет EOI'\n        );\n\n        let p = 2;\n\n        while (p < size - 2)\n        {\n            let m = await read(p, 2);\n\n            assert(m.getUint8(0) === 255);\n\n            let c = m.getUint8(1);\n\n            if (c === 255)\n            {\n                p++;\n                continue;\n            }\n\n            if (c === 0xda || c === 0xd9)\n            {\n                break;\n            }\n\n            if (c === 1 || (c >= 0xd0 && c <= 0xd7))\n            {\n                p += 2;\n                continue;\n            }\n\n            let n = (await read(p + 2, 2)).getUint16(0);\n\n            assert(n >= 2 && p + 2 + n <= size);\n\n            if (\n                [\n                    0xc0, 0xc1, 0xc2, 0xc3,\n                    0xc5, 0xc6, 0xc7, 0xc9,\n                    0xca, 0xcb, 0xcd, 0xce,\n                    0xcf\n                ].includes(c)\n            )\n            {\n                let d = await read(p + 4, 6);\n\n                r.height = d.getUint16(1);\n                r.width = d.getUint16(3);\n                r.depth = d.getUint8(0) * d.getUint8(5);\n\n                r.extra = `Режим: ${\n                    c === 0xc0\n                        ? 'Базовый последовательный JPEG'\n                        : c === 0xc2\n                            ? 'Прогрессивный JPEG'\n                            : c === 0xc3\n                                ? 'JPEG без потерь'\n                                : 'Расширенный режим JPEG'\n                }; компонент: ${d.getUint8(5)}; бит на компонент: ${d.getUint8(0)}`;\n            }\n\n            if (c === 0xe0 && n >= 16)\n            {\n                let d = await read(p + 4, 14);\n\n                if (str(d, 0, 5) === 'JFIF\\0')\n                {\n                    let k = d.getUint8(7);\n\n                    if (k === 1 || k === 2)\n                    {\n                        dpi(\n                            d.getUint16(8) * (k === 2 ? 2.54 : 1),\n                            d.getUint16(10) * (k === 2 ? 2.54 : 1)\n                        );\n                    }\n                }\n            }\n\n            if (c === 0xe1 && n >= 16)\n            {\n                let d = await read(p + 4, 6);\n\n                if (str(d, 0, 6) === 'Exif\\0\\0')\n                {\n                    try\n                    {\n                        let t = await tiff(p + 10, n - 8);\n\n                        let k = t[296]?.[0] === 3 ? 2.54 : 1;\n\n                        if (\n                            t[282] &&\n                            t[283] &&\n                            t[296]?.[0] !== 1\n                        )\n                        {\n                            dpi(\n                                t[282][0] * k,\n                                t[283][0] * k\n                            );\n                        }\n                    }\n                    catch\n                    {\n                    }\n                }\n            }\n\n            p += 2 + n;\n        }\n    }\n\n    // TIFF\n\n    else if (\n        size >= 8 &&\n        [0x4949, 0x4d4d].includes(b(0))\n    )\n    {\n        r.format = 'TIFF';\n\n        let t = await tiff(0, size);\n\n        r.width = t[256]?.[0];\n        r.height = t[257]?.[0];\n\n        let bits = t[258] || [1];\n\n        r.depth = bits.length === 1\n            ? bits[0] * (t[277]?.[0] || 1)\n            : bits.reduce((a, b) => a + b, 0);\n\n        let c = t[259]?.[0] || 1;\n\n        r.compression = ({\n            1: 'Без сжатия',\n            2: 'CCITT RLE',\n            3: 'CCITT Group 3',\n            4: 'CCITT Group 4',\n            5: 'LZW',\n            6: 'Old JPEG',\n            7: 'JPEG',\n            8: 'Deflate',\n            32773: 'PackBits',\n            32946: 'Deflate'\n        })[c] || `Код ${c}`;\n\n        let unit = t[296]?.[0] ?? 2;\n\n        if (unit !== 1)\n        {\n            dpi(\n                t[282]?.[0] * (unit === 3 ? 2.54 : 1),\n                t[283]?.[0] * (unit === 3 ? 2.54 : 1)\n            );\n        }\n\n        for (let [a, b] of [[273, 279], [324, 325]])\n        {\n            if (t[a] && t[b])\n            {\n                assert(t[a].length === t[b].length);\n\n                t[a].forEach((x, i) =>\n                {\n                    assert(\n                        x + t[b][i] <= size,\n                        'Обрезанные блоки TIFF'\n                    );\n                });\n            }\n        }\n\n        r.extra = 'IFD: ' +\n            Object.keys(t).length +\n            ' считанных тегов';\n    }\n\n    // PCX\n\n    else if (\n        size >= 128 &&\n        u(0) === 10 &&\n        [0, 1].includes(u(2)) &&\n        [1, 2, 4, 8].includes(u(3))\n    )\n    {\n        r.format = 'PCX';\n\n        r.width = l(8) - l(4) + 1;\n        r.height = l(10) - l(6) + 1;\n        r.depth = u(3) * u(65);\n\n        dpi(l(12), l(14));\n\n        r.compression = u(2)\n            ? 'RLE'\n            : 'Без сжатия';\n\n        assert(\n            l(66) > 0 &&\n            u(65) > 0 &&\n            size > 128\n        );\n\n        r.extra = `Плоскостей: ${u(65)}`;\n    }\n\n    // Неизвестный формат\n\n    else\n    {\n        throw Error('Неизвестная сигнатура или поврежденный файл');\n    }\n\n    assert(\n        r.width > 0 &&\n        r.height > 0 &&\n        r.depth > 0\n    );\n\n    return {\n        ...r,\n        bytesRead\n    };\n}\nself.onmessage = async ({ data: { id, file } }) =>\n{\n    try\n    {\n        self.postMessage({\n            id,\n            ...await parse(file),\n            status: 'OK'\n        });\n    }\n    catch (e)\n    {\n        let format = '';\n\n        try\n        {\n            const a = new Uint8Array(\n                await file.slice(0, 8).arrayBuffer()\n            );\n\n            const starts = (...v) => v.every((x, i) => a[i] === x);\n\n            if (starts(255, 216))\n            {\n                format = 'JPEG';\n            }\n            else if (starts(66, 77))\n            {\n                format = 'BMP';\n            }\n            else if (starts(137, 80, 78, 71, 13, 10, 26, 10))\n            {\n                format = 'PNG';\n            }\n            else if (\n                starts(71, 73, 70, 56, 55, 97) ||\n                starts(71, 73, 70, 56, 57, 97)\n            )\n            {\n                format = 'GIF';\n            }\n            else if (\n                starts(73, 73, 42, 0) ||\n                starts(77, 77, 0, 42) ||\n                starts(73, 73, 43, 0) ||\n                starts(77, 77, 0, 43)\n            )\n            {\n                format = 'TIFF';\n            }\n            else if (\n                a[0] === 10 &&\n                [0, 1].includes(a[2]) &&\n                [1, 2, 4, 8].includes(a[3])\n            )\n            {\n                format = 'PCX';\n            }\n        }\n        catch\n        {\n        }\n\n        self.postMessage({\n            id,\n            format,\n            status: 'Файл поврежден / не поддерживается',\n            extra: e.message\n        });\n    }\n};"], { type: "text/javascript" })
+);
+
+function scan(files, onBatch, onDone)
+{
+    let next = 0;
+    let done = 0;
+    let batch = [];
+    let closed = false;
+    let paused = false;
+    let activeStart = performance.now();
+    let elapsed = 0;
+
+    const workers = [];
+    const idle = new Set();
+    const pending = new Map();
+
+    function flush()
+    {
+        if (batch.length)
+        {
+            const out = batch;
+            batch = [];
+
+            onBatch(out, done, files.length);
+        }
+    }
+
+    function time()
+    {
+        return elapsed + (paused ? 0 : performance.now() - activeStart);
+    }
+
+    const timer = setInterval(flush, 100);
+
+    function stop()
+    {
+        if (closed)
+        {
+            return;
+        }
+
+        const ms = time();
+
+        closed = true;
+
+        clearInterval(timer);
+        workers.forEach(w => w.terminate());
+
+        flush();
+        onDone(done, ms);
+    }
+
+    function send(w)
+    {
+        if (closed)
+        {
+            return;
+        }
+
+        if (paused || next >= files.length)
+        {
+            idle.add(w);
+            return;
+        }
+
+        idle.delete(w);
+
+        const id = next++;
+
+        pending.set(w, id);
+
+        w.postMessage({
+            id,
+            file: files[id]
+        });
+    }
+
+    function complete(w, data)
+    {
+        if (closed)
+        {
+            return;
+        }
+
+        pending.delete(w);
+
+        done++;
+        batch.push(data);
+
+        if (done === files.length)
+        {
+            stop();
+            return;
+        }
+
+        send(w);
+
+        if (paused)
+        {
+            flush();
+        }
+    }
+
+    const workerCount = Math.min(
+        files.length,
+        Math.max(2, Math.min(8, navigator.hardwareConcurrency || 4))
+    );
+
+    for (let i = 0; i < workerCount; i++)
+    {
+        const w = new Worker(workerURL);
+
+        workers.push(w);
+
+        w.onmessage = ({ data }) =>
+        {
+            complete(w, data);
+        };
+
+        w.onerror = e =>
+        {
+            e.preventDefault?.();
+            stop();
+        };
+
+        send(w);
+    }
+
+    stop.pause = () =>
+    {
+        if (closed || paused)
+        {
+            return;
+        }
+
+        elapsed += performance.now() - activeStart;
+        paused = true;
+
+        flush();
+    };
+
+    stop.resume = () =>
+    {
+        if (closed || !paused)
+        {
+            return;
+        }
+
+        paused = false;
+        activeStart = performance.now();
+
+        for (const w of [...idle])
+        {
+            send(w);
+        }
+    };
+
+    stop.time = time;
+
+    return stop;
+}
+
+const $ = id => document.getElementById(id);
+
+let files = [],
+    results = [],
+    filtered = [],
+    page = 0,
+    cancel = null,
+    errors = 0,
+    dirty = true,
+    sortCol = -1,
+    sortDir = 0,
+    paused = false;
+
+const limit = 100;
+
+const supportedFormats = new Set([
+    "JPEG", "GIF", "TIFF", "BMP", "PNG", "PCX"
+]);
+
+let previewURL = null;
+
+const headers = [...document.querySelectorAll('thead th')];
+const headerNames = headers.map(h => h.textContent);
+const collator = new Intl.Collator('ru', { sensitivity: 'base' });
+
+const keys = [
+    r => files[r.id].name,
+    r => r.format || null,
+    r => r.width && r.height ? r.width * r.height : null,
+    r => r.dpiX ?? null,
+    r => r.depth ?? null,
+    r => r.compression || null,
+    r => r.status
+];
+
+function compare(a, b)
+{
+    let x = keys[sortCol](a);
+    let y = keys[sortCol](b);
+
+    if (x == null || y == null)
+    {
+        return x == null && y == null
+            ? a.id - b.id
+            : x == null ? 1 : -1;
+    }
+
+    let c = typeof x === 'number'
+        ? x - y
+        : collator.compare(x, y);
+
+    if (!c && sortCol === 3)
+    {
+        c = (a.dpiY ?? 0) - (b.dpiY ?? 0);
+    }
+
+    return c * sortDir || a.id - b.id;
+}
+
+function resetScroll()
+{
+    document.querySelector('.scroll').scrollTop = 0;
+}
+
+function gotoPage(n)
+{
+    page = n;
+    render();
+    resetScroll();
+}
+
+function pagination(pages)
+{
+    const el = $('pageButtons');
+    el.replaceChildren();
+
+    function add(text, n, disabled = false)
+    {
+        const b = document.createElement('button');
+
+        b.textContent = text;
+        b.disabled = disabled;
+
+        if (n === page && /^\d+$/.test(text))
+        {
+            b.className = 'active';
+            b.setAttribute('aria-current', 'page');
+        }
+
+        b.onclick = () => gotoPage(n);
+        el.append(b);
+    }
+
+    add('‹', page - 1, page === 0);
+
+    const nums = pages <= 9
+        ? Array.from({ length: pages }, (_, i) => i)
+        : [...new Set([
+            0, 1, 2, 3, 4,
+            page - 1,
+            page,
+            page + 1,
+            pages - 1
+        ].filter(n => n >= 0 && n < pages))]
+            .sort((a, b) => a - b);
+
+    let last = -1;
+
+    for (const n of nums)
+    {
+        if (n - last > 1)
+        {
+            let e = document.createElement('span');
+
+            e.className = 'ellipsis';
+            e.textContent = '…';
+
+            el.append(e);
+        }
+
+        add(String(n + 1), n);
+        last = n;
+    }
+
+    add('›', page + 1, page >= pages - 1);
+}
+
+headers.forEach((h, i) =>
+{
+    h.tabIndex = 0;
+    h.setAttribute('aria-sort', 'none');
+
+    const toggle = () =>
+    {
+        if (sortCol !== i)
+        {
+            sortCol = i;
+            sortDir = 1;
+        }
+        else if (sortDir === 1)
+        {
+            sortDir = -1;
+        }
+        else
+        {
+            sortCol = -1;
+            sortDir = 0;
+        }
+
+        headers.forEach((t, j) =>
+        {
+            t.textContent = headerNames[j] +
+                (sortCol === j
+                    ? (sortDir === 1 ? ' ↑' : ' ↓')
+                    : '');
+
+            t.setAttribute(
+                'aria-sort',
+                sortCol === j
+                    ? (sortDir === 1 ? 'ascending' : 'descending')
+                    : 'none'
+            );
+        });
+
+        dirty = true;
+        page = 0;
+
+        render();
+        resetScroll();
+    };
+
+    h.onclick = toggle;
+
+    h.onkeydown = e =>
+    {
+        if (e.key === 'Enter' || e.key === ' ')
+        {
+            e.preventDefault();
+            toggle();
+        }
+    };
+});
+
+const volume = n =>
+{
+    return `${n.toLocaleString('ru-RU')} Б (${(n / 1000000)
+        .toLocaleString('ru-RU', {
+            maximumFractionDigits: 2
+        })} МБ)`;
+};
+
+function render()
+{
+    if (dirty)
+    {
+        const q = $('search').value.toLowerCase();
+        const f = $('filter').value;
+        const st = $('statusFilter').value;
+
+        filtered = results.filter(r =>
+            files[r.id].name.toLowerCase().includes(q) &&
+            (
+                !f ||
+                (
+                    f === 'other'
+                        ? !supportedFormats.has(r.format)
+                        : r.format === f
+                )
+            ) &&
+            (
+                !st ||
+                (
+                    st === 'ok'
+                        ? r.status === 'OK'
+                        : r.status !== 'OK'
+                )
+            )
+        );
+
+        filtered.sort(
+            sortCol < 0
+                ? (a, b) => a.id - b.id
+                : compare
+        );
+
+        dirty = false;
+    }
+
+    let pages = Math.max(1, Math.ceil(filtered.length / limit));
+
+    page = Math.min(page, pages - 1);
+    pagination(pages);
+
+    let frag = document.createDocumentFragment();
+
+    for (let r of filtered.slice(page * limit, (page + 1) * limit))
+    {
+        let tr = document.createElement('tr');
+
+        let vals = [
+            files[r.id].name,
+            r.format || 'Другое',
+            r.width ? `${r.width} × ${r.height}` : '—',
+            r.dpiX
+                ? `${r.dpiX.toFixed(2)} × ${r.dpiY?.toFixed(2) ?? '—'}`
+                : 'Не задано',
+            r.depth || '—',
+            r.compression || '—',
+            r.status
+        ];
+
+        vals.forEach((v, i) =>
+        {
+            let td = document.createElement('td');
+
+            td.textContent = v;
+
+            if (i === 6)
+            {
+                td.className = r.status === 'OK' ? 'ok' : 'bad';
+            }
+
+            tr.append(td);
+        });
+
+        tr.onclick = () => detail(r);
+        tr.tabIndex = 0;
+
+        tr.onkeydown = e =>
+        {
+            if (e.key === 'Enter')
+            {
+                detail(r);
+            }
+        };
+
+        frag.append(tr);
+    }
+
+    $('rows').replaceChildren(frag);
+}
+
+function clearPreview()
+{
+    const img = $('preview');
+
+    img.onload = img.onerror = null;
+    img.hidden = true;
+    img.removeAttribute('src');
+
+    $('previewMessage').hidden = true;
+
+    if (previewURL)
+    {
+        URL.revokeObjectURL(previewURL);
+        previewURL = null;
+    }
+}
+
+function detail(r)
+{
+    clearPreview();
+
+    $('filename').textContent = files[r.id].name;
+
+    const f = files[r.id];
+
+    const props = [
+        ['Имя', f.name],
+        ['Размер файла', volume(f.size)],
+        [
+            'Расширение',
+            f.name.includes('.') ? f.name.split('.').pop() : '—'
+        ],
+        ['Формат по сигнатуре', r.format || 'Не определён'],
+        [
+            'Размеры',
+            r.width ? `${r.width} × ${r.height} px` : '—'
+        ],
+        [
+            'Пикселей',
+            r.width
+                ? (r.width * r.height).toLocaleString('ru-RU')
+                : '—'
+        ],
+        [
+            'DPI',
+            r.dpiX
+                ? `${r.dpiX.toFixed(2)} × ${r.dpiY?.toFixed(2) ?? '—'}`
+                : 'Не задано'
+        ],
+        [
+            'Глубина цвета',
+            r.depth ? `${r.depth} бит/пиксель` : '—'
+        ],
+        ['Сжатие', r.compression || '—'],
+        ['Статус', r.status],
+        [
+            'Прочитано для анализа',
+            r.bytesRead == null ? '—' : `${r.bytesRead} байт`
+        ]
+    ];
+
+    $('info').replaceChildren();
+
+    for (const [k, v] of props)
+    {
+        const dt = document.createElement('dt');
+        const dd = document.createElement('dd');
+
+        dt.textContent = k;
+        dd.textContent = v;
+
+        $('info').append(dt, dd);
+    }
+
+    const img = $('preview');
+    const msg = $('previewMessage');
+
+    previewURL = URL.createObjectURL(f);
+
+    const current = previewURL;
+
+    img.onload = () =>
+    {
+        if (previewURL === current)
+        {
+            img.hidden = false;
+            msg.hidden = true;
+        }
+    };
+
+    img.onerror = () =>
+    {
+        if (previewURL === current)
+        {
+            img.hidden = true;
+            msg.textContent = 'Изображение недоступно для просмотра в браузере.';
+            msg.hidden = false;
+        }
+    };
+
+    img.src = current;
+
+    $('detail').showModal();
+}
+
+function updateProgress(n, total)
+{
+    $('progress').value = n;
+
+    $('percent').textContent =
+        (total ? Math.floor(n / total * 100) : 0) + '%';
+}
+
+function stopButton(isPaused)
+{
+    paused = isPaused;
+
+    $('stop').classList.toggle('paused', isPaused);
+
+    $('stop').innerHTML = isPaused
+        ? `
+            <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="m8 5 12 7-12 7z"/>
+            </svg>
+            <span>Продолжить</span>
+        `
+        : `
+            <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M9 5H6v14h3zM18 5h-3v14h3z"/>
+            </svg>
+            <span>Остановить</span>
+        `;
+}
+
+function start(list)
+{
+    if (!list.length)
+    {
+        $('status').textContent = 'Нет файлов для анализа';
+        return;
+    }
+
+    if (list.length > 100000)
+    {
+        $('status').textContent = 'Максимум 100000 файлов';
+        return;
+    }
+
+    if (cancel)
+    {
+        cancel();
+    }
+
+    files = Array.from(list);
+    results = [];
+    errors = 0;
+    page = 0;
+    dirty = true;
+
+    $('total').textContent = files.length;
+
+    $('volume').textContent = volume(
+        files.reduce((sum, f) => sum + f.size, 0)
+    );
+
+    resetScroll();
+
+    $('done').textContent = 0;
+    $('errors').textContent = 0;
+    $('time').textContent = '—';
+
+    $('progress').max = files.length || 1;
+
+    updateProgress(0, files.length);
+    stopButton(false);
+
+    $('stop').disabled = false;
+    $('status').textContent = 'Анализ...';
+
+    render();
+
+    cancel = scan(
+        files,
+
+        (batch, n, total) =>
+        {
+            for (let r of batch)
+            {
+                results.push(r);
+
+                if (r.status !== 'OK')
+                {
+                    errors++;
+                }
+            }
+
+            dirty = true;
+
+            $('done').textContent = n;
+            $('errors').textContent = errors;
+
+            updateProgress(n, total);
+
+            if (paused)
+            {
+                $('status').textContent =
+                    `Приостановлено: ${n} из ${total}`;
+            }
+
+            render();
+        },
+
+        (n, ms) =>
+        {
+            stopButton(false);
+
+            $('stop').disabled = true;
+
+            $('time').textContent =
+                (ms / 1000).toFixed(2) + ' с';
+
+            $('status').textContent =
+                n === files.length
+                    ? 'Анализ завершён'
+                    : `Остановлено: ${n} из ${files.length}`;
+
+            cancel = null;
+        }
+    );
+}
+
+for (let id of ['folder', 'files'])
+{
+    $(id).onchange = e =>
+    {
+        dropVersion++;
+        start(e.target.files);
+        e.target.value = '';
+    };
+}
+
+$('stop').onclick = () =>
+{
+    if (!cancel)
+    {
+        return;
+    }
+
+    if (paused)
+    {
+        stopButton(false);
+
+        $('status').textContent = 'Анализ...';
+
+        cancel.resume();
+    }
+    else
+    {
+        stopButton(true);
+
+        cancel.pause();
+
+        $('time').textContent =
+            (cancel.time() / 1000).toFixed(2) + ' с';
+
+        $('status').textContent =
+            `Приостановлено: ${$('done').textContent} из ${files.length}`;
+    }
+};
+
+$('search').oninput =
+$('filter').onchange =
+$('statusFilter').onchange = () =>
+{
+    dirty = true;
+    page = 0;
+
+    render();
+    resetScroll();
+};
+
+$('close').onclick = () => $('detail').close();
+
+$('detail').onclose = clearPreview;
+
+$('detail').addEventListener('click', e =>
+{
+    const rect = $('detail').getBoundingClientRect();
+
+    if (
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom
+    )
+    {
+        $('detail').close();
+    }
+});
+
+$('drop').ondragover = e =>
+{
+    e.preventDefault();
+
+    $('drop').classList.add('drag');
+};
+
+$('drop').ondragleave = () =>
+{
+    $('drop').classList.remove('drag');
+};
+
+let dropVersion = 0;
+
+$('drop').ondrop = async e =>
+{
+    e.preventDefault();
+
+    $('drop').classList.remove('drag');
+
+    const version = ++dropVersion;
+    const fallback = Array.from(e.dataTransfer.files);
+
+    const items = Array.from(e.dataTransfer.items || [])
+        .filter(i => i.kind === 'file')
+        .map(i =>
+        {
+            let handle = null;
+            let entry = null;
+            let file = null;
+
+            try
+            {
+                if (i.getAsFileSystemHandle)
+                {
+                    handle = i.getAsFileSystemHandle()
+                        .catch(() => null);
+                }
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                entry = i.webkitGetAsEntry?.();
+            }
+            catch
+            {
+            }
+
+            if (!entry?.isDirectory)
+            {
+                try
+                {
+                    file = i.getAsFile();
+                }
+                catch
+                {
+                }
+            }
+
+            return { handle, entry, file };
+        });
+
+    if (cancel)
+    {
+        cancel();
+    }
+
+    $('status').textContent = 'Чтение папок…';
+
+    const list = [];
+
+    function add(f)
+    {
+        if (list.length >= 100000)
+        {
+            throw Error('Максимум 100000 файлов');
+        }
+
+        list.push(f);
+
+        if (list.length % 1000 === 0)
+        {
+            $('status').textContent =
+                `Чтение папок… ${list.length} файлов`;
+        }
+    }
+
+    async function walkHandle(h)
+    {
+        if (version !== dropVersion)
+        {
+            return;
+        }
+
+        if (h.kind === 'file')
+        {
+            add(await h.getFile());
+        }
+        else if (h.kind === 'directory')
+        {
+            for await (const child of h.values())
+            {
+                await walkHandle(child);
+            }
+        }
+    }
+
+    async function walkEntry(entry)
+    {
+        if (version !== dropVersion)
+        {
+            return;
+        }
+
+        if (entry.isFile)
+        {
+            add(
+                await new Promise((resolve, reject) =>
+                {
+                    entry.file(resolve, reject);
+                })
+            );
+        }
+        else if (entry.isDirectory)
+        {
+            const reader = entry.createReader();
+
+            while (true)
+            {
+                const batch = await new Promise((resolve, reject) =>
+                {
+                    reader.readEntries(resolve, reject);
+                });
+
+                if (!batch.length)
+                {
+                    break;
+                }
+
+                for (const child of batch)
+                {
+                    await walkEntry(child);
+                }
+            }
+        }
+    }
+
+    try
+    {
+        for (const item of items)
+        {
+            const before = list.length;
+            const h = await item.handle;
+
+            if (h)
+            {
+                try
+                {
+                    await walkHandle(h);
+                    continue;
+                }
+                catch (err)
+                {
+                    if (err.message === 'Максимум 100000 файлов')
+                    {
+                        throw err;
+                    }
+
+                    list.length = before;
+
+                    if (!item.entry && !item.file)
+                    {
+                        throw err;
+                    }
+                }
+            }
+
+            if (item.entry)
+            {
+                try
+                {
+                    await walkEntry(item.entry);
+                    continue;
+                }
+                catch (err)
+                {
+                    if (
+                        item.entry.isDirectory ||
+                        !item.file ||
+                        err.message === 'Максимум 100000 файлов'
+                    )
+                    {
+                        throw err;
+                    }
+
+                    list.length = before;
+                }
+            }
+
+            if (item.file)
+            {
+                add(item.file);
+            }
+            else
+            {
+                throw Error('Браузер не предоставил доступ к папке');
+            }
+        }
+
+        if (version === dropVersion)
+        {
+            start(items.length ? list : fallback);
+        }
+    }
+    catch (err)
+    {
+        if (version === dropVersion)
+        {
+            $('status').textContent =
+                'Не удалось прочитать папку: ' +
+                err.message +
+                '. Попробуйте кнопку «Выбрать папку».';
+        }
+    }
+};
+
+render();
+</script>
+</body>
+
+</html>
